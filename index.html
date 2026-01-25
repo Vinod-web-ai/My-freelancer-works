@@ -445,61 +445,64 @@
             <form id="contact-form" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
               <div class="row gy-4">
             <script>
-document.getElementById("contact-form").addEventListener("submit", function(e) {
-  e.preventDefault();
+
 
   <script>
-document.getElementById("contact-form").addEventListener("submit", function(e) {
-  e.preventDefault();
+function sendWhatsApp() {
+  var name = document.getElementById("name").value.trim();
+  var email = document.getElementById("email").value.trim();
+  var subject = document.getElementById("subject").value.trim();
+  var message = document.getElementById("message").value.trim();
 
-  // Get form values
-  var name = document.getElementById("name").value;
-  var email = document.getElementById("email").value;
-  var subject = document.getElementById("subject").value;
-  var message = document.getElementById("message").value;
+  if (!name || !email || !subject || !message) {
+    alert("Please fill all fields");
+    return;
+  }
 
-  // Your WhatsApp number (with country code, no +)
+  // Your WhatsApp number (country code, NO +)
   var phoneNumber = "9199994545295";
 
-  // WhatsApp message format
-  var whatsappMessage =
-    "Name: " + name + "%0A" +
-    "Email: " + email + "%0A" +
-    "Subject: " + subject + "%0A" +
+  var text =
+    "Name: " + name + "\n" +
+    "Email: " + email + "\n" +
+    "Subject: " + subject + "\n" +
     "Message: " + message;
 
-  // Open WhatsApp
-  var whatsappURL = "https://wa.me/" + phoneNumber + "?text=" + whatsappMessage;
+  var whatsappURL =
+    "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(text);
+
   window.open(whatsappURL, "_blank");
-});
+}
 </script>
 
-                <div class="col-md-6">
-                  <input type="text" name="name" id="name" class="form-control" placeholder="Your Name" required="">
-                </div>
+                <form id="contact-form" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+  <div class="row gy-4">
 
-                <div class="col-md-6 ">
-                  <input type="email" name="email" id="email" class="form-control" placeholder="Your Email" required="">
-                </div>
+    <div class="col-md-6">
+      <input type="text" id="name" class="form-control" placeholder="Your Name" required>
+    </div>
 
-                <div class="col-md-12">
-                  <input type="text" name="subject" id="subject" class="form-control" placeholder="Subject" required="">
-                </div>
+    <div class="col-md-6">
+      <input type="email" id="email" class="form-control" placeholder="Your Email" required>
+    </div>
 
-                <div class="col-md-12">
-                  <textarea name="message" id="message" class="form-control" rows="10" placeholder="Message" required=""></textarea>
-                </div>
+    <div class="col-md-12">
+      <input type="text" id="subject" class="form-control" placeholder="Subject" required>
+    </div>
 
-                <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
+    <div class="col-md-12">
+      <textarea id="message" class="form-control" rows="6" placeholder="Message" required></textarea>
+    </div>
 
-                  <button type="submit">Send Message</button>
-                </div>
+    <div class="col-md-12 text-center">
+      <!-- SAME BUTTON DESIGN -->
+      <button type="button" class="btn btn-primary" onclick="sendWhatsApp()">
+        Send Message
+      </button>
+    </div>
 
-              </div>
-            </form>
+  </div>
+</form>
           </div><!-- End Contact Form -->
 
         </div>
