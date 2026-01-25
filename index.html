@@ -27,7 +27,7 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script>
   (function(){
     emailjs.init("bF4YYZVcrvJeh4lNb");
@@ -442,90 +442,84 @@
           </div>
 
           <div class="col-lg-8">
-            <form id="contact-form" class="php-email-form">
-  <div class="row gy-4">
-
-    <div class="col-md-6">
-      <input type="text" id="name" class="form-control" placeholder="Your Name" required>
-    </div>
-
-    <div class="col-md-6">
-      <input type="email" id="email" class="form-control" placeholder="Your Email" required>
-    </div>
-
-    <div class="col-md-12">
-      <input type="text" id="subject" class="form-control" placeholder="Subject" required>
-    </div>
-
-    <div class="col-md-12">
-      <textarea id="message" class="form-control" rows="6" placeholder="Message" required></textarea>
-    </div>
-
-    <div class="col-md-12 text-center">
-      <button type="submit" class="btn btn-primary">Send Message</button>
-    </div>
-
-  </div>
-</form>
-
+            <form id="contact-form" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+              <div class="row gy-4">
             <script>
 
 
- <script>
-document.getElementById("contact-form").addEventListener("submit", function (e) {
-  e.preventDefault();
-
+  <script>
+function sendWhatsApp() {
   var name = document.getElementById("name").value.trim();
   var email = document.getElementById("email").value.trim();
   var subject = document.getElementById("subject").value.trim();
   var message = document.getElementById("message").value.trim();
 
-  if (!name || !email || !message) {
-    alert("Please fill all required fields");
+  if (!name || !email || !subject || !message) {
+    alert("Please fill all fields");
     return;
   }
 
+  // Your WhatsApp number (country code, NO +)
   var phoneNumber = "9199994545295";
 
-  var whatsappMessage =
-    "Name: " + encodeURIComponent(name) + "%0A" +
-    "Email: " + encodeURIComponent(email) + "%0A" +
-    "Subject: " + encodeURIComponent(subject) + "%0A" +
-    "Message: " + encodeURIComponent(message);
+  var text =
+    "Name: " + name + "\n" +
+    "Email: " + email + "\n" +
+    "Subject: " + subject + "\n" +
+    "Message: " + message;
 
-  var whatsappURL = "https://wa.me/" + phoneNumber + "?text=" + whatsappMessage;
+  var whatsappURL =
+    "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(text);
+
   window.open(whatsappURL, "_blank");
-});
+}
 </script>
 
-                <form id="contact-form" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+                <form id="contact-form">
   <div class="row gy-4">
 
     <div class="col-md-6">
-      <input type="text" id="name" class="form-control" placeholder="Your Name" required>
+      <input type="text" name="name" class="form-control" placeholder="Your Name" required>
     </div>
 
     <div class="col-md-6">
-      <input type="email" id="email" class="form-control" placeholder="Your Email" required>
+      <input type="email" name="email" class="form-control" placeholder="Your Email" required>
     </div>
 
     <div class="col-md-12">
-      <input type="text" id="subject" class="form-control" placeholder="Subject" required>
+      <input type="text" name="subject" class="form-control" placeholder="Subject" required>
     </div>
 
     <div class="col-md-12">
-      <textarea id="message" class="form-control" rows="6" placeholder="Message" required></textarea>
+      <textarea name="message" class="form-control" rows="6" placeholder="Message" required></textarea>
     </div>
 
     <div class="col-md-12 text-center">
-      <!-- SAME BUTTON DESIGN -->
-      <button type="button" class="btn btn-primary" onclick="sendWhatsApp()">
-        Send Message
-      </button>
-    </div>
-
-  </div>
+       <button type="submit">Send Message</button>
 </form>
+
+<script type="text/javascript">
+  // Make sure this script is **after your form HTML** or at the end of <body>
+  document.getElementById("contact-form").addEventListener("submit", function(e) {
+    e.preventDefault(); // prevent default form submission
+
+    const form = this; // reference to your form
+
+    emailjs.sendForm(
+      'service_049s1ea',   // your Service ID
+      'template_s463i0i',  // your Template ID
+      form,                // the form element
+      'bF4YYZVcrvJeh4lNb'    // replace this with your EmailJS Public Key
+    )
+    .then(() => {
+      alert('Message sent successfully!');
+      form.reset(); // reset form fields
+    }, (error) => {
+      alert('Failed to send message: ' + JSON.stringify(error));
+      console.error(error); // log full error for debugging
+    });
+  });
+</script>
           </div><!-- End Contact Form -->
 
         </div>
